@@ -29,6 +29,6 @@ public class Bootstrap implements CommandLineRunner {
         userRepository.save(user3);
         userRepository.save(user4);
 
-        System.out.printf("Data Loaded: "+userRepository.count());
+        System.out.printf("Data Loaded: " + userRepository.count());
     }
 }
