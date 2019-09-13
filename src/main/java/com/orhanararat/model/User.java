@@ -4,19 +4,25 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.Entity;
-import javax.validation.constraints.Past;
+import javax.persistence.Lob;
 import javax.validation.constraints.Size;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @Entity
 public class User extends BaseEntity {
 
+    public User() {
+        setCreateDate(LocalDateTime.now());
+    }
+
     @Size(min = 3, message = "Name should have 2 character")
     private String name;
-
-//    @Past
-//    private LocalDate birthDay;
-
+    private String surname;
+    private int age;
+    private String gender;
+    private String profileImageUrl;
+    @Lob
+    private String profileImage;
 }

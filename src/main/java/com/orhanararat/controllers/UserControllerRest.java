@@ -8,6 +8,7 @@ import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -25,15 +26,14 @@ public class UserControllerRest {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<User> getUsers() {
-        return userService.getAllUsers();
+        return userService.findAllByStatus();
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public User getFindById(@PathVariable Long id) {
-        User user = userService.getUserById(id);
 
-        return user;
+        return userService.getUserById(id,1);
     }
 
     @PostMapping("/")
@@ -45,19 +45,26 @@ public class UserControllerRest {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public String deleteUser(@PathVariable Long id) {
-        userRepository.deleteById(id);
+        userService.deleteById(id);
         return "Deleted is Success";
     }
 
 
-    @PutMapping("/{id}/{name}")
-    @ResponseStatus(HttpStatus.OK)
-    public User updateUser(@PathVariable Long id, @PathVariable String name) {
-        User user = userRepository.findById(id).get();
-        user.setName(name);
-        userRepository.save(user);
-        return user;
-    }
+//    @PutMapping("/{id}/{name}")
+//    @PutMapping("/")
+//    @ResponseStatus(HttpStatus.OK)
+//    public User updateUser(@RequestBody Long id, @RequestBody String name) {
+//        User user = userRepository.findById(id).get();
+//        user.setName(name);
+//        userRepository.save(user);
+//        return user;
+//    }
 
+    @PutMapping("/")
+    @ResponseStatus(HttpStatus.OK)
+    public User updateUser(@RequestBody User user) {
+
+        return userService.updateUser(user);
+    }
 
 }
